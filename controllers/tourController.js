@@ -167,13 +167,6 @@ exports.getToursWithin = catchAsync(async (req, res, next) => {
   const { distance, latlng, unit } = req.params;
   const [lat, lng] = latlng.split(',');
 
-  /*
-   ==>> the radius is basically the distance that we want to have as the radius,but
-        converted to a special unit called radians AND in order to get the radians
-        we need to divide our distance by the radius of the earth
-        (distance of the earth in miles Vs distance of the earth in Km)
-        "And radians we get by dividing the distance by the radius of the Earth."
-   */
   const radius = unit === 'mi' ? distance / 3963.2 : distance / 6378.1;
 
   if (!lat || !lng) {
@@ -186,18 +179,7 @@ exports.getToursWithin = catchAsync(async (req, res, next) => {
   }
   // console.log(distance, lat, lng, unit);
 
-  /*
-  ==> -startLocation feild :- the geospatial point where each tour starts
-      and that exactly what we are searching for
-      - $geoWithin :- it finds document within a certain geometry,and that
-        geometry that we need to define at next step 'centerSphere Operator'
-      -the centerSphere operator takes an array of the coords and radius
-      -mongoDb expected a radius in a special unit called => radians
-    
-    -another very important thing is that we actually in order to be able to do just
-    basic queries, we need to first attribute an index to the field where the geospatial data
-    that we're searching for is stored.So in this case, we need to add an index to start location.
-  */
+
   const tours = await Tour.find({
     startLocation: { $geoWithin: { $centerSphere: [[lng, lat], radius] } },
   });
@@ -227,14 +209,7 @@ exports.getDistances = catchAsync(async (req, res, next) => {
     );
   }
 
-  /*
-  ==>> for geospatial aggregation:-
-  there's actually only one single stage,and that's called geoNear, so this one.
-  Again, this is the only geospatial aggregation pipeline stage that actually exists.
 
-  Something else that's also very important to note about geoNear is that it requires
-  that at least one of our fields contains a geospatial index. , 'startLocation'
-  */
 
   const distances = await Tour.aggregate([
     {

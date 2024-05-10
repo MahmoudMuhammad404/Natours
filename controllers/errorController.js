@@ -1,9 +1,4 @@
-/*
-==>>  "value": "wwwwwwe",
-        "path": "_id",
-        "name": "CastError",
-      ex:- when we input invalid id 'when you want to get tour'
-*/
+
 
 /*
 ==>> Handling invalid database IDs
