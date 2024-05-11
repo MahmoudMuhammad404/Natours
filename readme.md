@@ -4,8 +4,8 @@ This project is aimed at providing a comprehensive solution for managing tours, 
 
 # Key Features
 
-# Authentication and Authorization
+1-Authentication and Authorization
 
--Sign up, log in, log out functionalities
--User profile management including username, photo, email, and password updates
--User roles: regular user, admin, lead guide, guide
+-Sign up, log in, log out functionalities \n
+-User profile management including username, photo, email, and password updates \n
+-User roles: regular user, admin, lead guide, guide \n
